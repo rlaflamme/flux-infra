@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: pfsense-ca-issuer
+    k8s.apisix.apache.org/plugin-config-name: myclient-oidc
+    k8s.apisix.apache.org/upstream-scheme: http
+  name: my-secure-app
+  namespace: httpbin
+spec:
+  ingressClassName: apisix
+  rules:
+    - host: my-secure-app.apps.lab.okd.local
+      http:
+        paths:
+          - backend:
+              service:
+                name: httpbin
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - my-secure-app.apps.lab.okd.local
+      secretName: my-secure-app-ingress-tls

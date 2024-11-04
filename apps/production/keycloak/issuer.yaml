@@ -1,0 +1,31 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: vault-issuer
+  namespace: keycloak
+spec:
+  vault:
+    path: ${vault_pki_mount_path}/sign/keycloak
+    server: ${vault_address}
+    auth:
+      kubernetes:
+        mountPath: /v1/auth/${vault_auth_kubernetes_mount_path}
+        role: keycloak
+        secretRef:
+          name: vault-issuer-token
+          key: token
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vault-issuer
+  namespace: keycloak
+---
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: vault-issuer-token
+  namespace: keycloak
+  annotations:
+   kubernetes.io/service-account.name: vault-issuer

@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: pfsense-ca-issuer
+    k8s.apisix.apache.org/plugin-config-name: policy-reporter-oidc
+    k8s.apisix.apache.org/upstream-scheme: http
+  name: policy-reporter
+  namespace: kyverno
+spec:
+  ingressClassName: apisix
+  rules:
+  - host: policy-reporter.apps.lab.okd.local
+    http:
+      paths:
+      - backend:
+          service:
+            name: policy-reporter-ui
+            port:
+              name: http
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - policy-reporter.apps.lab.okd.local
+    secretName: policy-reporter-ingress-tls

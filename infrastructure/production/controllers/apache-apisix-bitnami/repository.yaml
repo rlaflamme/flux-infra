@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: bitnami
+  namespace: apisix
+spec:
+  interval: 5m
+#  type: oci
+#  url: oci://hub-registry.lab.okd.local/docker.io/bitnamicharts/apisix
+  url: https://charts.bitnami.com/bitnami

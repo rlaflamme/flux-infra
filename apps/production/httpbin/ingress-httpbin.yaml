@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: pfsense-ca-issuer
+    k8s.apisix.apache.org/http-to-https: "true"
+  name: httpbin
+  namespace: httpbin
+spec:
+  ingressClassName: apisix
+  rules:
+    - host: httpbin.apps.lab.okd.local
+      http:
+        paths:
+          - backend:
+              service:
+                name: httpbin
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - httpbin.apps.lab.okd.local
+      secretName: httpbin-ingress-tls

@@ -1,0 +1,16 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: admin-apisix-dev
+  namespace: apisix
+spec:
+  host: admin.apisix.dev
+  to:
+    kind: Service
+    name: apisix-data-plane
+    weight: 100
+  port:
+    targetPort: https
+  tls:
+    termination: passthrough      
+  wildcardPolicy: None

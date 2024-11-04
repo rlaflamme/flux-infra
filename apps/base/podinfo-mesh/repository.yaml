@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: nexus-podinfo
+  namespace: podinfo-mesh
+spec:
+  type: oci
+  interval: 5m
+  url: oci://hub-registry.lab.okd.local/ghcr.io/stefanprodan/charts

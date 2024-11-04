@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: pfsense-ca-issuer
+    k8s.apisix.apache.org/upstream-scheme: http
+  name: apisix-admin
+  namespace: ingress-apisix
+spec:
+  ingressClassName: apisix
+  rules:
+    - host: apisix-admin.apps.lab.okd.local
+      http:
+        paths:
+          - backend:
+              service:
+                name: apisix-admin
+                port:
+                  name: apisix-admin
+            path: /apisix
+            pathType: Prefix
+  tls:
+    - hosts:
+        - apisix-admin.apps.lab.okd.local
+      secretName: apisix-admin-ingress-tls

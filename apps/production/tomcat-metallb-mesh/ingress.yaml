@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: pfsense-ca-issuer
+  name: tomcat-metallb-mesh
+  namespace: tomcat-metallb-mesh
+spec:
+  ingressClassName: kong
+  rules:
+    - host: tomcat.mesh.lab.okd.local
+      http:
+        paths:
+          - backend:
+              service:
+                name: tomcat-metallb
+                port:
+                  name: 8080-tcp 
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - tomcat.mesh.lab.okd.local
+      secretName: tomcat-mesh-ingress-tls

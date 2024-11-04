@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: external-secrets
+resources:
+  - external-secret-gitlab-ssh-key.yaml
+  - external-secret-gitlab-webhook.yaml
+  - external-secret-nexus3-image-registry.yaml
+  - external-secret-nexus3-image-registry-opaque.yaml
+  - external-secret-repository.yaml
+  - secret-store-gitops-tekton-welcome-pipeline.yaml
+  - secret-store-repository.yaml

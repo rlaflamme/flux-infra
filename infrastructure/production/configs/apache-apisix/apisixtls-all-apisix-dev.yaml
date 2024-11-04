@@ -1,0 +1,16 @@
+apiVersion: apisix.apache.org/v2
+kind: ApisixTls
+metadata:
+  name: all-apisix-dev
+  namespace: ingress-apisix
+spec:
+  hosts:
+    - "*.apisix.dev"
+  secret:
+    name: admin-apisix-dev
+    namespace: ingress-apisix
+  client:
+    caSecret:
+      name: admin-apisix-dev
+      namespace: ingress-apisix
+    depth: 10

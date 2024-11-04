@@ -1,0 +1,110 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vault-server
+  namespace: hashicorp
+spec:
+  interval: 30m
+  releaseName: vault-server
+  chart:
+    spec:
+      chart: vault
+      version: "0.25.0"
+      sourceRef:
+        kind: HelmRepository
+        name: hashicorp
+        namespace: hashicorp
+      interval: 12h
+  driftDetection:
+    mode: enabled
+  upgrade:
+    crds: CreateReplace
+  values:
+    global:
+      openshift: false
+      tlsDisable: false
+    injector:
+      enabled: false
+    server:
+      affinity: ""
+      ha:
+        enabled: true
+        replicas: 3
+        raft: 
+          enabled: true
+          setNodeId: true
+          config: |
+            ui = true
+
+            listener "tcp" {
+              tls_disable = 0
+              address = "[::]:8200"
+              cluster_address = "[::]:8201"
+              tls_client_ca_file  = "/vault/userconfig/vault-server-tls/ca.crt"
+              tls_cert_file = "/vault/userconfig/vault-server-tls/tls.crt"
+              tls_key_file  = "/vault/userconfig/vault-server-tls/tls.key"
+            }
+
+            seal "transit" {
+              address = "https://vault-transit.hashicorp:8200"
+              disable_renewal = "false"
+              key_name = "autounseal"
+              mount_path = "transit/"
+              tls_ca_cert = "/vault/userconfig/vault-server-tls/ca.crt"
+              tls_server_name = "vault-transit"
+            }
+
+            storage "raft" {
+              path = "/vault/data"
+              retry_join {
+                leader_tls_servername = "vault-server"
+                leader_api_addr = "https://vault-server-0.vault-server-internal:8200"
+                leader_ca_cert_file  = "/vault/userconfig/vault-server-tls/ca.crt"
+                leader_client_cert_file = "/vault/userconfig/vault-server-tls/tls.crt"
+                leader_client_key_file  = "/vault/userconfig/vault-server-tls/tls.key"
+              }  
+              retry_join {
+                leader_tls_servername = "vault-server"
+                leader_api_addr = "https://vault-server-1.vault-server-internal:8200"
+                leader_ca_cert_file  = "/vault/userconfig/vault-server-tls/ca.crt"
+                leader_client_cert_file = "/vault/userconfig/vault-server-tls/tls.crt"
+                leader_client_key_file  = "/vault/userconfig/vault-server-tls/tls.key"
+              }      
+              retry_join {
+                leader_tls_servername = "vault-server"
+                leader_api_addr = "https://vault-server-2.vault-server-internal:8200"
+                leader_ca_cert_file  = "/vault/userconfig/vault-server-tls/ca.crt"
+                leader_client_cert_file = "/vault/userconfig/vault-server-tls/tls.crt"
+                leader_client_key_file  = "/vault/userconfig/vault-server-tls/tls.key"
+              }     
+            }
+
+            service_registration "kubernetes" {}
+      extraSecretEnvironmentVars:
+        - envName: VAULT_TOKEN
+          secretName: transit-vault-token
+          secretKey: token
+      route:
+        enabled: true
+        host: vault.apps.lab.okd.local
+        tls:
+          termination: reencrypt
+          destinationCACertificate: |-
+            -----BEGIN CERTIFICATE-----
+            MIIBaDCCAQ2gAwIBAgIRAO13n1qRvusZJqAjF/7Mrr8wCgYIKoZIzj0EAwIwEzER
+            MA8GA1UEAxMIdmF1bHQtY2EwHhcNMjMwMzI4MjIyMDExWhcNMzMwMzI1MjIyMDEx
+            WjATMREwDwYDVQQDEwh2YXVsdC1jYTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IA
+            BOZj3ihTgnYkTOKbv/uMo5AJjR8VGOG2SgFwioPvVcv6onyiYaSWLa99nbGghGMl
+            r11SAzR46/zqE3BIVHMHEjGjQjBAMA4GA1UdDwEB/wQEAwICpDAPBgNVHRMBAf8E
+            BTADAQH/MB0GA1UdDgQWBBQjlOEKn+/FJ+hllUbQK7kI+bxpNzAKBggqhkjOPQQD
+            AgNJADBGAiEAnmePQyhlseaD8Bl6EMbYel2zbwly1ave88oCcmb/wIgCIQCx0E7d
+            haB/dgCIeoyEit/OaVqA5gfpNS6eNwj2INScSg==
+            -----END CERTIFICATE-----
+      volumes:
+        - name: tls
+          secret:
+            defaultMode: 420
+            secretName: vault-server-tls
+      volumeMounts:
+        - mountPath: /vault/userconfig/vault-server-tls
+          name: tls

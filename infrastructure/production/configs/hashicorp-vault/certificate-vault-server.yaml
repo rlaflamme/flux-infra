@@ -1,0 +1,53 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-server
+  namespace: hashicorp
+spec:
+  secretName: vault-server-tls
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+    rotationPolicy: Always 
+  issuerRef:
+    name: vault-ca-issuer
+    kind: Issuer
+    group: cert-manager.io
+  commonName: vault-server
+  dnsNames:
+  - vault-server
+  - vault-server.hashicorp
+  - vault-server.hashicorp.svc.cluster.local
+  - vault-server-active
+  - vault-server-active.hashicorp
+  - vault-server-active.hashicorp.svc.cluster.local
+  - vault-server-internal
+  - vault-server-internal.hashicorp
+  - vault-server-internal.hashicorp.svc.cluster.local
+  - vault-server-standby
+  - vault-server-standby.hashicorp
+  - vault-server-standby.hashicorp.svc.cluster.local
+  - vault-server-0
+  - vault-server-0.hashicorp
+  - vault-server-0.vault-server-internal
+  - vault-server-0.vault-server-internal.hashicorp
+  - vault-server-0.vault-server-internal.hashicorp.svc
+  - vault-server-0.vault-server-internal.hashicorp.svc.cluster.local
+  - vault-server-1
+  - vault-server-1.hashicorp
+  - vault-server-1.vault-server-internal
+  - vault-server-1.vault-server-internal.hashicorp
+  - vault-server-1.vault-server-internal.hashicorp.svc
+  - vault-server-1.vault-server-internal.hashicorp.svc.cluster.local
+  - vault-server-2
+  - vault-server-2.hashicorp
+  - vault-server-2.vault-server-internal
+  - vault-server-2.vault-server-internal.hashicorp
+  - vault-server-2.vault-server-internal.hashicorp.svc
+  - vault-server-2.vault-server-internal.hashicorp.svc.cluster.local
+  ipAddresses:
+  - 127.0.0.1
+

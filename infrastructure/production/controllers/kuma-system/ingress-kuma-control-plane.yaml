@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: pfsense-ca-issuer
+    k8s.apisix.apache.org/plugin-config-name: kuma-oidc
+    k8s.apisix.apache.org/upstream-scheme: http
+  name: kuma-control-plane
+  namespace: kuma-system
+spec:
+  ingressClassName: apisix
+  rules:
+  - host: kuma-control-plane.apps.lab.okd.local
+    http:
+      paths:
+      - backend:
+          service:
+            name: kuma-control-plane
+            port:
+              number: 5681
+        path: /*
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - kuma-control-plane.apps.lab.okd.local
+    secretName: kuma-control-plane-tls

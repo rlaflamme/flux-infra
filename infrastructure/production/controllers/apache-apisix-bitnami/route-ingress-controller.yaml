@@ -1,0 +1,16 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: apisix-ingress-controller
+  namespace: apisix
+spec:
+  host: apisix-ingress-controller.apps.lab.okd.local
+  to:
+    kind: Service
+    name: apisix-ingress-controller
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge      
+  wildcardPolicy: None

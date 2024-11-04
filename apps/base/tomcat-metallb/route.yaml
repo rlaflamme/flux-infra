@@ -1,0 +1,16 @@
+# kind: Route
+# apiVersion: route.openshift.io/v1
+# metadata:
+#   name: tomcat-metallb
+#   namespace: tomcat-metallb
+# spec:
+#   host: tomcat-metallb.apps.lab.okd.local
+#   to:
+#     kind: Service
+#     name: tomcat-metallb
+#     weight: 100
+#   port:
+#     targetPort: 8080-tcp
+#   tls:
+#     termination: edge      
+#   wildcardPolicy: None

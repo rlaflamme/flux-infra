@@ -1,0 +1,16 @@
+# kind: Route
+# apiVersion: route.openshift.io/v1
+# metadata:
+#   name: grafana
+#   namespace: grafana
+# spec:
+#   host: grafana.apps.lab.okd.local
+#   to:
+#     kind: Service
+#     name: grafana
+#     weight: 100
+#   port:
+#     targetPort: service
+#   tls:
+#     termination: edge      
+#   wildcardPolicy: None

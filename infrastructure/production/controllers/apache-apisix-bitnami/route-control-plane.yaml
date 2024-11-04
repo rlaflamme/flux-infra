@@ -1,0 +1,16 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: apisix-control-plane
+  namespace: apisix
+spec:
+  host: apisix-control-plane.apps.lab.okd.local
+  to:
+    kind: Service
+    name: apisix-control-plane
+    weight: 100
+  port:
+    targetPort: https-admin-api
+  tls:
+    termination: passthrough      
+  wildcardPolicy: None

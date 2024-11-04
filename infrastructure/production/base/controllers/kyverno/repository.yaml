@@ -1,0 +1,32 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: kyverno
+  namespace: kyverno
+spec:
+  interval: 24h
+  type: oci
+#  url: oci://hub-registry.lab.okd.local/helm-charts/kyverno.github.io
+# 3.2.6
+  url: oci://hub-registry.lab.okd.local/helm-charts/kyverno.github.io/kyverno
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: kyverno-policies
+  namespace: kyverno
+spec:
+  interval: 24h
+  type: oci
+  url: oci://hub-registry.lab.okd.local/helm-charts/kyverno.github.io
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: policy-reporter
+  namespace: kyverno
+spec:
+  interval: 24h
+  type: oci
+  url: oci://hub-registry.lab.okd.local/helm-charts/kyverno.github.io/policy-reporter

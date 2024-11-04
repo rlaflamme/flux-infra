@@ -1,0 +1,16 @@
+apiVersion: notification.toolkit.fluxcd.io/v1
+kind: Receiver
+metadata:
+  name: repository-webhook-receiver
+  namespace: welcome-app-dev
+spec:
+  type: gitlab
+  events:
+    - "Push Hook"
+    - "Tag Push Hook"
+  secretRef:
+    name: external-secret-gitlab-webhook
+  resources:
+    - apiVersion: source.toolkit.fluxcd.io/v1
+      kind: GitRepository
+      name: welcome-app-dev

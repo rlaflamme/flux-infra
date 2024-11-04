@@ -1,0 +1,16 @@
+apiVersion: apisix.apache.org/v2
+kind: ApisixTls
+metadata:
+  name: apisixtls-admin-apisix-dev
+  namespace: httpbin
+spec:
+  hosts:
+    - "*.apisix.dev"
+  secret:
+    name: server-admin-apisix-dev
+    namespace: httpbin
+  client:
+    caSecret:
+      name: client-ca-admin-apisix-dev
+      namespace: httpbin
+    depth: 10

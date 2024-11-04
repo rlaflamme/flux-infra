@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-ca
+  namespace: hashicorp
+spec:
+  commonName: vault-ca
+  duration: 87600h
+  isCA: true
+  issuerRef:
+    name: vault-root-ca-issuer
+    kind: Issuer
+    group: cert-manager.io
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  renewBefore: 360h
+  secretName: vault-ca-tls

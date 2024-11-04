@@ -1,0 +1,23 @@
+apiVersion: kuma.io/v1alpha1
+kind: Mesh
+metadata:
+  name: default
+spec:
+  mtls:
+    enabledBackend: cert-manager
+    backends:
+      - name: cert-manager
+        type: provided
+        dpCert:
+          rotation:
+            expiration: 1d
+        conf:
+          cert:
+            secret: mtls-root-certificate
+          key:
+            secret: mtls-root-key
+  networking:
+    outbound:
+      passthrough: true
+
+# https://blog.scottlowe.org/2022/02/17/using-cert-manager-with-kuma-mtls/

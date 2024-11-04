@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tomcat-metallb
+  namespace: tomcat-metallb-mesh
+spec:
+  chart:
+    spec:
+      chart: ./tomcat-metallb
+      sourceRef:
+        kind: GitRepository
+        name: tomcat-metallb
+  interval: 30m0s
+  install:
+    remediation:
+      retries: 3
+  values:
+    replicaCount: 1
+    image:
+      repository: hub-registry.lab.okd.local/tomcat/my-tomcat
+      pullPolicy: Always
+      tag: 9.0.71-jdk17-corretto-al2
+    service:
+      type: LoadBalancer
+      port: 8080
+      annotations: {
+        "metallb.universe.tf/address-pool": "default"
+      }

@@ -1,0 +1,32 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: vault-issuer
+  namespace: ingress-apisix
+spec:
+  vault:
+    path: ${vault_pki_mount_path}/sign/apisix
+    server: ${vault_address}
+    auth:
+      kubernetes:
+        mountPath: /v1/auth/${vault_auth_kubernetes_mount_path}
+        role: apisix
+        secretRef:
+          name: vault-issuer-token
+          key: token
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vault-issuer
+  namespace: ingress-apisix
+---
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: vault-issuer-token
+  namespace: ingress-apisix
+  annotations:
+   kubernetes.io/service-account.name: vault-issuer

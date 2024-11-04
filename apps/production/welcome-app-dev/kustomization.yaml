@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources: []
+  # - ../../base/welcome-app-dev
+  # - externalsecret-gitlab-webhook.yaml
+  # - externalsecret-repository.yaml
+  # - receiver-repository-webhook.yaml

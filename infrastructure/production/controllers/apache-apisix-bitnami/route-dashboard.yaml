@@ -1,0 +1,16 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: apisix-dashboard
+  namespace: apisix
+spec:
+  host: apisix-dashboard.apps.lab.okd.local
+  to:
+    kind: Service
+    name: apisix-dashboard
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge      
+  wildcardPolicy: None

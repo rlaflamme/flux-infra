@@ -1,0 +1,72 @@
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: confluent-ca-bundle
+spec:
+  sources:
+  - inLine: |
+      # Owner: CN=Hashicorp Vault PKI Intermediate Certificate Authority - lab.okd.local
+      -----BEGIN CERTIFICATE-----
+      MIIEITCCAwmgAwIBAgIUePlqqb0KvT43whQbT/HaYjfU52cwDQYJKoZIhvcNAQEL
+      BQAwSTFHMEUGA1UEAxM+SGFzaGljb3JwIFZhdWx0IFBLSSBSb290IENlcnRpZmlj
+      YXRlIEF1dGhvcml0eSAtIGxhYi5va2QubG9jYWwwHhcNMjIxMDA5MTgwNjUxWhcN
+      MzcxMDA5MTIwNzIxWjBRMU8wTQYDVQQDE0ZIYXNoaWNvcnAgVmF1bHQgUEtJIElu
+      dGVybWVkaWF0ZSBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkgLSBsYWIub2tkLmxvY2Fs
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAquxqOF3tHdKmT5alfY3g
+      LbwIOcTrF8PaZhEn85n2qH06RTKvUk8SSbUolJJxqkYlAICJmwoO5lPAsqMTGq/U
+      YQ1nQk/rWlwgxc6Ey6p/F3+2S45fAlaL1gPytX5L3ZWpLbJa7GWtDNrZvAlSZBY3
+      PcduMuWJtdXejEQDG8Zfvt7PybuhVdJSByE90FKblLl7xfi2KkAeWhe1v9EyFJ6p
+      pDEpMT3N4flIPmd+Yf96KXLDTptwyjcevcFpsqzZ+TBkFAWA/nazxAO6wEjkM7FV
+      vOdsJUVtuMXIxMCRi4W4i9dbJt5YTtu7gu/e8Ue1EBdwaAg3REnXt22FmOR0LWuR
+      QQIDAQABo4H4MIH1MA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MB0G
+      A1UdDgQWBBTYNWcBK4mC8/4XNKPG40TnvHerGTAfBgNVHSMEGDAWgBRZpY28H6HG
+      IH2jUz65aXA7UBYYrTBNBggrBgEFBQcBAQRBMD8wPQYIKwYBBQUHMAKGMWh0dHBz
+      Oi8vb2tkNC12YXVsdC0xLmxhYi5va2QubG9jYWw6ODIwMC92MS9wa2kvY2EwQwYD
+      VR0fBDwwOjA4oDagNIYyaHR0cHM6Ly9va2Q0LXZhdWx0LTEubGFiLm9rZC5sb2Nh
+      bDo4MjAwL3YxL3BraS9jcmwwDQYJKoZIhvcNAQELBQADggEBAEsg9SenSuWpR+f+
+      8y0b47xaMRv7QKirUxgQ7XeeZVwg4Lz1jmah/s7kbREAzma+AiTHbtYvwdjZMgfV
+      064SH3m6l8fgeIW4maIzULrcvsM0iSLtjN+Mn3AlxQ1rO8cbMcJbxk+n6g89GsrL
+      YY6ORQFzhQlJ/cagmtH6L9d2aBZjXjKsEZnk1Uajyvl6iYzW2OxZefULnxjV2dkB
+      NdcGrFdiWAD5x63pwVMgt4Yq8s6PQI9dIVOSF3x8l2L71aPOFQ57uWgRZ/he1/cN
+      8/In3fMKP9mwwwMOjlpeu/XWGtOVFvNLkR8X6BwObpC8CH6ZyPT2DdVCn/r5Lddy
+      RPCpPw0=
+      -----END CERTIFICATE-----
+      -----BEGIN CERTIFICATE-----
+      MIIEqzCCApOgAwIBAgIBAjANBgkqhkiG9w0BAQsFADB2MSQwIgYDVQQDDBtQcm94
+      bW94IFZpcnR1YWwgRW52aXJvbm1lbnQxLTArBgNVBAsMJGU0MjFmYTBlLWUwN2Mt
+      NDYxNy1iYmM3LWY5NmE1MDMzY2JiYzEfMB0GA1UECgwWUFZFIENsdXN0ZXIgTWFu
+      YWdlciBDQTAeFw0yMTEyMTkwNTQ1NDVaFw0yMzEyMTkwNTQ1NDVaMFQxGTAXBgNV
+      BAsTEFBWRSBDbHVzdGVyIE5vZGUxJDAiBgNVBAoTG1Byb3htb3ggVmlydHVhbCBF
+      bnZpcm9ubWVudDERMA8GA1UEAxMIcHZlMi5sYW4wggEiMA0GCSqGSIb3DQEBAQUA
+      A4IBDwAwggEKAoIBAQC5vC2mKxayizTm7EmPjvHCBs9viGTXrpk49elWQzkqzJSr
+      jlBnJyQtRWnmn47Ku1MdVeBatgldeDfBTjXNzhRwhIjZPx9g0WGhGgt0e3076FHj
+      Jjmj6sdbKEmefqBrcNF2pzhhm7iLMRgH2FiAvuUXi9LcqO4Px9TGow770hHbpZGr
+      NUntMWmVoQP4ecdLDakfs98hgWxW2FGjYIfLkZRlnRVpMo4BQP5nakUXZ8lTuZty
+      D49kLnvV+vBtZv1IsOwPeSGpnvh1GLRskoipuG/Nq3LxvRPiZDz3zve21dCIxwqi
+      omfAhg9tilcfVcKXDfs7Lq3ozF5PR/fhKg55LNf7AgMBAAGjZjBkMAkGA1UdEwQC
+      MAAwEwYDVR0lBAwwCgYIKwYBBQUHAwEwQgYDVR0RBDswOYcEfwAAAYcQAAAAAAAA
+      AAAAAAAAAAAAAYIJbG9jYWxob3N0hwTAqAHGggRwdmUygghwdmUyLmxhbjANBgkq
+      hkiG9w0BAQsFAAOCAgEAO87Z5TokyAGtFWp4MhrtnM9H+1b7E87F4jUPfK1eru/h
+      mpKMazdCPpD+R/AXl2AGKe9J9rBmarjRaw5IO9eJpg6PTvjb9r6u3wA0HYjbYiBZ
+      f0nm1KdJmwDgvHHCBYPkS1QGIaoVe0QH+3xzK3G2ORU9FWUOZN4jMiitzzTK9oa4
+      qmq22fl/z2TWPn8Hsp946SHhu2UoCn727CmcP0qN2uaYlkLHrJL8Y2y78yDn561r
+      Q+glFWFrWGsXEqey4a3LK4RPfXv5OGx2zZiSODGAbngm9XmitF7vr5Wodo2lju3e
+      avH4mXt7dkutyLX0FtnKoZITOADGmLwRV//dXDA7hcEb/wh+fbzVNZXiCrBpud4C
+      h4HqLRXR7s9LH57StqBujIblWRkMiymEKM/pXeDPzEKEkO6zr1CBk9IzdjOykroJ
+      DZB3CD12bfNerk6RQ2ME/WlMJEaueTvbwphuqVtQ6yvvwtQVvv9IF6I+aCbAoR8V
+      fCQOu/8HF2+D+0IqGvVRS/YytmmG1zq+VBJGIt6HOzfWHp16d4URIu0k4Krz5JWT
+      nRvXcczPDNGTNkGqpZxeHYmBA6XY7EKPLNyqiPEiKIw1/o+PTy98PRmjPJp5iC3J
+      GVdrleNa1bEqydsmh8bEyloCPS32yIXVnslPVHQwwJSQJvRSBLHEeeij7GDmZAw=
+      -----END CERTIFICATE-----
+  target:
+    configMap:
+      key: "ca-certificates.crt"
+    additionalFormats:
+      jks:
+        key: "bundle.jks"
+        password: "changeit"
+      pkcs12:
+        key: "bundle.p12"
+    namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: confluent

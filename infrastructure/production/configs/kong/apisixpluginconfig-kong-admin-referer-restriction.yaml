@@ -1,0 +1,14 @@
+apiVersion: apisix.apache.org/v2
+kind: ApisixPluginConfig
+metadata:
+  name: referer-from-manager-only
+  namespace: kong
+spec:
+  plugins:
+  - config:
+      bypass_missing: false
+      message: "This site can only be accessed from the kong manager only"
+      whitelist:
+       - "kong-manager.apps.lab.okd.local"
+    enable: true
+    name: referer-restriction

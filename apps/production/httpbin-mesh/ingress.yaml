@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: pfsense-ca-issuer
+  name: httpbin
+  namespace: httpbin-mesh
+spec:
+  ingressClassName: kong
+  rules:
+    - host: httpbin.mesh.lab.okd.local
+      http:
+        paths:
+          - backend:
+              service:
+                name: httpbin
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - httpbin.mesh.lab.okd.local
+      secretName: httpbin-mesh-ingress-tls

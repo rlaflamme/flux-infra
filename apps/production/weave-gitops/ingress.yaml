@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: pfsense-ca-issuer
+    k8s.apisix.apache.org/plugin-config-name: weave-gitops-oidc
+    k8s.apisix.apache.org/upstream-scheme: http
+  name: weave-gitops
+  namespace: weaveworks
+spec:
+  ingressClassName: apisix
+  rules:
+    - host: weave-gitops.apps.lab.okd.local
+      http:
+        paths:
+          - backend:
+              service:
+                name: weave-gitops
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - weave-gitops.apps.lab.okd.local
+      secretName: weave-gitops-ingress-tls

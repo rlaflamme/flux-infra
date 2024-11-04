@@ -1,0 +1,16 @@
+# kind: Route
+# apiVersion: route.openshift.io/v1
+# metadata:
+#   name: webhook-receiver
+#   namespace: flux-system
+# spec:
+#   host: flux-webhook.apps.lab.okd.local
+#   to:
+#     kind: Service
+#     name: webhook-receiver
+#     weight: 100
+#   port:
+#     targetPort: http
+#   tls:
+#     termination: edge      
+#   wildcardPolicy: None

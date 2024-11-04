@@ -1,0 +1,35 @@
+---
+apiVersion: kuma.io/v1alpha1
+kind: MeshTrafficPermission
+metadata:
+  namespace: httpbin-mesh
+  name: allow-gateway
+spec:
+  targetRef:
+    kind: MeshService
+    name: httpbin_httpbin-mesh_svc_80
+  from:
+    - targetRef:
+        kind: MeshSubset
+        tags:
+          k8s.kuma.io/namespace: kong
+          k8s.kuma.io/service-name: kong-kong-admin
+      default:
+        action: Allow
+---
+apiVersion: kuma.io/v1alpha1
+kind: MeshTrafficPermission
+metadata:
+  namespace: httpbin-mesh
+  name: allow-podinfo
+spec:
+  targetRef:
+    kind: MeshService
+    name: httpbin_httpbin-mesh_svc_80
+  from:
+    - targetRef:
+        kind: MeshService
+        name: podinfo_podinfo-mesh_svc_9898
+      default:
+        action: Allow
+---

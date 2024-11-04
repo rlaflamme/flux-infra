@@ -1,0 +1,52 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-transit
+  namespace: hashicorp
+spec:
+  secretName: vault-transit-tls
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+    rotationPolicy: Always 
+  issuerRef:
+    name: vault-ca-issuer
+    kind: Issuer
+    group: cert-manager.io
+  commonName: vault-transit
+  dnsNames:
+  - vault-transit
+  - vault-transit.hashicorp
+  - vault-transit.hashicorp.svc.cluster.local
+  - vault-transit-active
+  - vault-transit-active.hashicorp
+  - vault-transit-active.hashicorp.svc.cluster.local
+  - vault-transit-internal
+  - vault-transit-internal.hashicorp
+  - vault-transit-internal.hashicorp.svc.cluster.local
+  - vault-transit-standby
+  - vault-transit-standby.hashicorp
+  - vault-transit-standby.hashicorp.svc.cluster.local
+  - vault-transit-0
+  - vault-transit-0.hashicorp
+  - vault-transit-0.vault-transit-internal
+  - vault-transit-0.vault-transit-internal.hashicorp
+  - vault-transit-0.vault-transit-internal.hashicorp.svc
+  - vault-transit-0.vault-transit-internal.hashicorp.svc.cluster.local
+  - vault-transit-1
+  - vault-transit-1.hashicorp
+  - vault-transit-1.vault-transit-internal
+  - vault-transit-1.vault-transit-internal.hashicorp
+  - vault-transit-1.vault-transit-internal.hashicorp.svc
+  - vault-transit-1.vault-transit-internal.hashicorp.svc.cluster.local
+  - vault-transit-2
+  - vault-transit-2.hashicorp
+  - vault-transit-2.vault-transit-internal
+  - vault-transit-2.vault-transit-internal.hashicorp
+  - vault-transit-2.vault-transit-internal.hashicorp.svc
+  - vault-transit-2.vault-transit-internal.hashicorp.svc.cluster.local
+  ipAddresses:
+  - 127.0.0.1

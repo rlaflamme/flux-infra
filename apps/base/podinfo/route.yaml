@@ -1,0 +1,16 @@
+# kind: Route
+# apiVersion: route.openshift.io/v1
+# metadata:
+#   name: podinfo
+#   namespace: podinfo
+# spec:
+#   host: podinfo.apps.lab.okd.local
+#   to:
+#     kind: Service
+#     name: podinfo
+#     weight: 100
+#   port:
+#     targetPort: http
+#   tls:
+#     termination: edge
+#   wildcardPolicy: None

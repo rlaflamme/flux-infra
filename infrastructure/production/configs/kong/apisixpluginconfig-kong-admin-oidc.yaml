@@ -1,0 +1,16 @@
+apiVersion: apisix.apache.org/v2
+kind: ApisixPluginConfig
+metadata:
+  name: kong-admin-oidc
+  namespace: kong
+spec:
+  plugins:
+    - name: openid-connect
+      enable: true
+      config:
+        discovery: https://keycloak.apps.lab.okd.local/realms/okd4/.well-known/openid-configuration
+        scope: "openid profile"
+        bearer_only: false
+        realm: okd4
+        redirect_uri: https://kong-admin.apps.lab.okd.local/callback
+      secretRef: kong-oidc-plugin-config

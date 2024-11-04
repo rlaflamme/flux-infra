@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: weave-gitops-helm
+  namespace: weaveworks
+spec:
+  interval: 1m0s
+  type: oci
+  url: oci://hub-registry.lab.okd.local/charts/weave-gitops

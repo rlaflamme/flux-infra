@@ -1,0 +1,12 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: tomcat-metallb
+  namespace: tomcat-metallb
+spec:
+  interval: 1m0s
+  ref:
+    branch: main
+  secretRef:
+    name: external-secret-tomcat-metallb-repository
+  url: https://gitlab.lab.okd.local/helm/tomcat-metallb.git

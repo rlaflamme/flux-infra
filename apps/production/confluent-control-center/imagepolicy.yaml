@@ -1,0 +1,23 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: control-center
+  namespace: flux-system
+spec:
+  # secretRef:
+  #   name: regcred
+  image: hub-registry.lab.okd.local/confluent/control-center
+  interval: 1m
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: control-center
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: control-center
+  policy:
+    semver:
+      range: ">=0.0.1"

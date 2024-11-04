@@ -1,0 +1,48 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: vault-issuer
+  namespace: confluent
+spec:
+  vault:
+    path: ${vault_pki_mount_path}/sign/confluent-ingress-issuer
+    server: ${vault_address}
+    auth:
+      kubernetes:
+        mountPath: /v1/auth/${vault_auth_kubernetes_mount_path}
+        role: confluent-ingress-issuer
+        secretRef:
+          name: vault-issuer-token
+          key: token
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: vault-issuer-control-center
+  namespace: confluent
+spec:
+  vault:
+    path: ${vault_pki_mount_path}/sign/confluent-control-center
+    server: ${vault_address}
+    auth:
+      kubernetes:
+        mountPath: /v1/auth/${vault_auth_kubernetes_mount_path}
+        role: confluent-control-center
+        secretRef:
+          name: vault-issuer-token
+          key: token
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vault-issuer
+  namespace: confluent
+---
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: vault-issuer-token
+  namespace: confluent
+  annotations:
+   kubernetes.io/service-account.name: vault-issuer

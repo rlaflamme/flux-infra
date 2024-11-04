@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: secrets-store-csi-driver
+  namespace: secrets-store-csi-driver
+spec:
+  interval: 24h
+  type: oci
+  url: oci://hub-registry.lab.okd.local/helm-charts/kubernetes-sigs.github.io/secrets-store-csi-driver

@@ -1,0 +1,17 @@
+apiVersion: apisix.apache.org/v2
+kind: ApisixRoute
+metadata:
+  name: admin-apisix-dev
+  namespace: httpbin
+spec:
+  http:
+    - name: default
+      match:
+        hosts:
+          - admin.apisix.dev
+        paths:
+          - /*
+          - /
+      backends:
+        - serviceName: httpbin
+          servicePort: http

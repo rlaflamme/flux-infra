@@ -1,0 +1,49 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: confluent-charts
+  namespace: confluent
+spec:
+  interval: 1m0s
+  ref:
+    branch: main
+  secretRef:
+    name: confluent-charts
+  url: https://gitlab.lab.okd.local/helm/confluent.git
+---
+apiVersion: external-secrets.io/v1beta1
+kind: SecretStore
+metadata:
+  name: confluent-charts-repository
+  namespace: confluent
+spec:
+  provider:
+    vault:
+      server: ${vault_address}
+      path: ${vault_kv_engine_secret_mount_path}
+      auth:
+        kubernetes:
+          mountPath: ${vault_auth_kubernetes_mount_path}
+          role: confluent-control-center
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: confluent-charts
+  namespace: confluent
+spec:
+  secretStoreRef:
+    name: confluent-charts-repository
+    kind: SecretStore
+  target:
+    name: confluent-charts
+    template:
+      type: Opaque
+      data:
+        username: production_flux_helm_token_reader
+        password: "{{ .access_token }}"
+  data:
+  - secretKey: access_token 
+    remoteRef:
+      key: production/flux
+      property: gitlab_group_helm_token_reader

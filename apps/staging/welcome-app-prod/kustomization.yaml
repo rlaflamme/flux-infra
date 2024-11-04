@@ -1,0 +1,6 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base/welcome-app-prod
+  - vault-secret-repository.yaml  
+  - vault-secret-gitlab-webhook.yaml

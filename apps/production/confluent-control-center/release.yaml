@@ -1,0 +1,61 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: control-center
+  namespace: confluent
+spec:
+  chart:
+    spec:
+      chart: ./control-center
+      sourceRef:
+        kind: GitRepository
+        name: confluent-charts
+      valuesFiles: 
+      - ./control-center/values.yaml
+  interval: 30m0s
+  install:
+    remediation:
+      retries: 3
+  driftDetection:
+    mode: enabled
+
+  values:
+
+    replicaCount: 1
+
+    # create a certificate manager certificate (cert-manager required)
+    certificate:
+      create: false
+      # # the hostname / subject alternative names for the certificate
+      # dnsNames: 
+      # - control-center.lab.okd.local
+      # duration: 2160h # 90d
+      # renewBefore: 360h # 15d
+      # tls:
+      #   secretName: control-center-ingress-tls
+
+    image:
+      repository: hub-registry.lab.okd.local/confluent/control-center # {"$imagepolicy": "flux-system:control-center:name"}
+      pullPolicy: Always
+      tag: 0.0.9 # {"$imagepolicy": "flux-system:control-center:tag"}
+
+    initImages:
+      debug: true
+      openssl: registry.access.redhat.com/ubi9/ubi:9.2-755.1696515532
+      openjdk: registry.access.redhat.com/ubi9/openjdk-17-runtime:1.16-1.1696518671
+
+    route:
+      enabled: false
+      host: control-center.apps.lab.okd.local
+      tls:
+        termination: edge    
+
+    vault:
+      address: ${vault_address}
+      auth_kubernetes_mount_path: ${vault_auth_kubernetes_mount_path}
+      pki_mount_path: ${vault_pki_mount_path}
+      kv_engine_secret_mount_path: kv/confluent
+      pki_cert:
+        ttl: 4380h
+
